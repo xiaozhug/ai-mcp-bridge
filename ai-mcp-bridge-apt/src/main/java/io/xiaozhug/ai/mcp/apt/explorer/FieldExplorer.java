@@ -109,8 +109,9 @@ public class FieldExplorer {
             }
 
             // 检查是否为简单类型
-            boolean isComplexByExtension = checkExtensions(ext -> ext.isComplexType(type, typeName));
-            if (!isComplexByExtension || !typeChecker.isComplexType(type, typeName)) {
+            String qualifiedName = getQualifiedName(type);
+            boolean isComplexByExtension = checkExtensions(ext -> ext.isComplexType(type, qualifiedName));
+            if (!isComplexByExtension || !typeChecker.isComplexType(type, qualifiedName)) {
                 debugLog(() -> "简单类型，跳过: " + typeName, depth);
                 fieldCache.put(typeName, Collections.emptyList());
                 return fieldCache.get(typeName);

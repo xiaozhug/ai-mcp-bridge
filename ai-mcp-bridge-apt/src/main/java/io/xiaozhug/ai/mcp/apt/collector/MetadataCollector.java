@@ -296,7 +296,9 @@ public class MetadataCollector {
             }
 
             if(processedParams == null || originalParams.size() != processedParams.size()){
-                throw new RuntimeException("LLM返回的元数据参数数量与原始不匹配");
+                LogUtils.error("originalParams: " + JsonUtils.toJSONString(originalParams));
+                LogUtils.error("processedParams: " + (processedParams == null ? "" : JsonUtils.toJSONString(processedParams)));
+                throw new RuntimeException("LLM返回的元数据参数数量与原始不匹配: 原始=" + originalParams.size() + ", LLM=" + processedParams.size());
             }
 
             for (int j = 0; j < originalItem.getParams().size(); j++) {
@@ -318,7 +320,9 @@ public class MetadataCollector {
         }
 
         if (processedFields == null || originalFields.size() != processedFields.size()) {
-            throw new RuntimeException("LLM返回的元数据字段数量与原始不匹配");
+            LogUtils.error("originalFields: " + JsonUtils.toJSONString(originalFields));
+            LogUtils.error("processedFields: " + (processedFields == null ? "" : JsonUtils.toJSONString(processedFields)));
+            throw new RuntimeException("LLM返回的元数据字段数量与原始不匹配: 原始=" + originalFields.size() + ", LLM=" + processedFields.size());
         }
 
         for (int i = 0; i < originalFields.size(); i++) {

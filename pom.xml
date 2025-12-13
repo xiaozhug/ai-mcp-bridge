@@ -49,10 +49,12 @@
         <module>ai-mcp-bridge-apt</module>
         <module>ai-mcp-bridge-common</module>
 
+        <module>ai-mcp-bridge-dependencies</module>
+
     </modules>
 
     <properties>
-        <revision>1.0.0-SNAPSHOT</revision>
+        <revision>1.0.0</revision>
 
         <maven.test.skip>true</maven.test.skip>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
