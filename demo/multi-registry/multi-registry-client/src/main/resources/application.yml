@@ -1,0 +1,47 @@
+server:
+  port: 8081
+
+spring:
+  application:
+    name: multi-registry-client
+  ai:
+    openai:
+      api-key: your-api-key
+      chat:
+        options:
+          model: your-model
+      base-url: your-base-url
+
+  cloud:
+    nacos:
+      discovery:
+#        enabled: false
+        server-addr: 127.0.0.1:8848
+    consul:
+      enabled: false
+      host: 127.0.0.1
+      port: 8500
+      discovery:
+        hostname: 127.0.0.1
+    zookeeper:
+      enabled: false
+      connect-string: 127.0.0.1:2181
+
+    #    spring-mcp-bridge-client-starter中的discovery方式
+    discovery:
+      fetch:
+        enabled: true
+
+eureka:
+  client:
+    service-url:
+      defaultZone: http://127.0.0.1:12346/eureka/
+    enabled: false
+  instance:
+    instance-id: ${spring.application.name}:${random.int}
+
+mcp:
+#  registry: eureka
+#  registry: zookeeper
+  registry: consul
+#  registry: nacos

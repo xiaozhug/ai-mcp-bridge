@@ -1,0 +1,21 @@
+server:
+  port: 8082
+
+spring:
+  application:
+    name: rest-to-mcp-tool-client
+  ai:
+    openai:
+      api-key: your-api-key
+      chat:
+        options:
+          model: your-model
+      base-url: your-base-url
+
+#    spring ai 原生配置
+    mcp:
+      client:
+        sse:
+          connections:
+            server1:
+              url: http://localhost:8081

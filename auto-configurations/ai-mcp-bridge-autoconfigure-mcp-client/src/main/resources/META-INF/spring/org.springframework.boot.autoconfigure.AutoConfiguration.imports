@@ -1,0 +1,4 @@
+io.xiaozhug.ai.mcp.client.tool.autoconfigure.ExistNamedContextFactoryDiscoveryMcpFetchAutoConfiguration
+io.xiaozhug.ai.mcp.client.tool.autoconfigure.NotExistNamedContextFactoryDiscoveryMcpFetchAutoConfiguration
+io.xiaozhug.ai.mcp.client.tool.autoconfigure.McpClientAutoConfiguration
+io.xiaozhug.ai.mcp.client.tool.autoconfigure.McpClientDiscoveryAutoConfiguration

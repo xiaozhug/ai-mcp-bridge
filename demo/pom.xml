@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <parent>
+        <groupId>io.github.xiaozhug</groupId>
+        <artifactId>ai-mcp-bridge</artifactId>
+        <version>${revision}</version>
+        <relativePath>../pom.xml</relativePath>
+    </parent>
+
+    <artifactId>demo</artifactId>
+    <packaging>pom</packaging>
+    <name>demo</name>
+    <description>demo</description>
+
+    <modules>
+        <module>metadata-compile/metadata-apt-extension</module>
+        <module>metadata-compile/metadata-compile-jdk8</module>
+        <module>metadata-compile/metadata-compile-jdk17</module>
+
+        <module>rest-to-mcp-http/rest-to-mcp-http-server</module>
+        <module>rest-to-mcp-http/rest-to-mcp-http-client</module>
+
+        <module>rest-to-mcp-tool/rest-to-mcp-tool-server</module>
+        <module>rest-to-mcp-tool/rest-to-mcp-tool-client</module>
+
+        <module>rest-mcp-registry/rest-mcp-registry-server</module>
+        <module>rest-mcp-registry/rest-mcp-registry-client</module>
+
+        <module>native-mcp-registry/native-mcp-registry-server</module>
+        <module>native-mcp-registry/native-mcp-registry-client</module>
+
+        <module>multi-registry/multi-registry-server</module>
+        <module>multi-registry/multi-registry-client</module>
+
+        <module>enterprise-solution/enterprise-solution-server</module>
+        <module>enterprise-solution/enterprise-solution-client</module>
+    </modules>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-javadoc-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <id>attach-javadocs</id>
+                        <phase>none</phase> <!-- 完全移除这个执行 -->
+                    </execution>
+                </executions>
+            </plugin>
+
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+            </plugin>
+
+        </plugins>
+    </build>
+
+</project>

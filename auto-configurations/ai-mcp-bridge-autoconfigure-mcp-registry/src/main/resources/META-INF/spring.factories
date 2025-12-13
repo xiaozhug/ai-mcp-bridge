@@ -1,0 +1,2 @@
+org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
+io.xiaozhug.ai.mcp.registry.autoconfigure.McpRegistryCenterAutoConfiguration

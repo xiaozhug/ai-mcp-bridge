@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <parent>
+        <groupId>io.github.xiaozhug</groupId>
+        <artifactId>ai-mcp-bridge</artifactId>
+        <version>${revision}</version>
+        <relativePath>../../../pom.xml</relativePath>
+    </parent>
+
+    <artifactId>metadata-compile-jdk8</artifactId>
+    <name>demo :: metadata-compile :: metadata-compile-jdk8</name>
+    <description>metadata-compile-jdk8</description>
+
+    <dependencies>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-web</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>io.github.xiaozhug</groupId>
+            <artifactId>ai-mcp-bridge-apt</artifactId>
+            <optional>true</optional>
+        </dependency>
+    </dependencies>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <inherited>false</inherited>
+                <configuration>
+                    <compilerArgs>
+                        <arg>-parameters</arg>
+                        <arg>-Amcp.apiUrl=</arg>
+                        <arg>-Amcp.apiKey=</arg>
+                        <arg>-Amcp.model=</arg>
+                        <arg>-Amcp.output=${project.basedir}/src/main/resources</arg>
+                        <arg>-Amcp.targetPackages=io.xiaozhug.demo.metadata.compile</arg>
+                        <arg>-Amcp.debug=true</arg>
+                    </compilerArgs>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+</project>

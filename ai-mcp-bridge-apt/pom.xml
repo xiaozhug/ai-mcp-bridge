@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <parent>
+        <groupId>io.github.xiaozhug</groupId>
+        <artifactId>ai-mcp-bridge</artifactId>
+        <version>${revision}</version>
+        <relativePath>../pom.xml</relativePath>
+    </parent>
+
+    <artifactId>ai-mcp-bridge-apt</artifactId>
+    <name>ai-mcp-bridge :: ai-mcp-bridge-apt</name>
+    <description>ai-mcp-bridge-apt</description>
+
+    <dependencies>
+        <dependency>
+            <groupId>io.github.xiaozhug</groupId>
+            <artifactId>ai-mcp-bridge-common</artifactId>
+            <version>${revision}</version>
+            <scope>compile</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>com.fasterxml.jackson.core</groupId>
+            <artifactId>jackson-databind</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>com.google.auto.service</groupId>
+            <artifactId>auto-service</artifactId>
+            <version>1.0.1</version>
+            <optional>true</optional>
+        </dependency>
+    </dependencies>
+
+</project>

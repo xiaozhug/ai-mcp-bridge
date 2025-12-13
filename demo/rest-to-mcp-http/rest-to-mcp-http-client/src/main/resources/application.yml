@@ -1,0 +1,22 @@
+server:
+  port: 8082
+
+spring:
+  application:
+    name: rest-to-mcp-http-client
+  ai:
+    openai:
+      api-key: your-api-key
+      chat:
+        options:
+          model: your-model
+      base-url: your-base-url
+
+#  spring-mcp-bridge-client-starter中的http方式
+    mcp:
+      fetch:
+        http:
+          enabled: true
+          connections:
+            server1: http://localhost:8081
+

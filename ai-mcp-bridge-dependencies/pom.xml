@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+
+    <modelVersion>4.0.0</modelVersion>
+    <groupId>io.github.xiaozhug</groupId>
+    <artifactId>ai-mcp-bridge-dependencies</artifactId>
+    <version>1.0.0-SNAPSHOT</version>
+
+    <packaging>pom</packaging>
+
+    <name>ai-mcp-bridge-dependencies</name>
+    <description>ai-mcp-bridge-dependencies</description>
+
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>io.github.xiaozhug</groupId>
+                <artifactId>ai-mcp-bridge-apt</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>io.github.xiaozhug</groupId>
+                <artifactId>ai-mcp-bridge-spring-boot-mcp-adapter-tool-starter</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>io.github.xiaozhug</groupId>
+                <artifactId>ai-mcp-bridge-spring-boot-mcp-client-starter</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>io.github.xiaozhug</groupId>
+                <artifactId>ai-mcp-bridge-spring-boot-mcp-file-expose-starter</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>io.github.xiaozhug</groupId>
+                <artifactId>ai-mcp-bridge-spring-boot-mcp-registry-starter</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>io.github.xiaozhug</groupId>
+                <artifactId>ai-mcp-bridge-spring-boot-mcp-server-expose-starter</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
+
+</project>

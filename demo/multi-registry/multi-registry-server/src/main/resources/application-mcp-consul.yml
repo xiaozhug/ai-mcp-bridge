@@ -1,0 +1,8 @@
+spring:
+  cloud:
+    consul:
+      host: localhost
+      port: 8500
+      enabled: true
+      discovery:
+        hostname: 127.0.0.1

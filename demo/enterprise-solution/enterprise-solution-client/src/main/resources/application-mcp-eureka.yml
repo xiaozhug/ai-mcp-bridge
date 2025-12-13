@@ -1,0 +1,7 @@
+eureka:
+  client:
+    service-url:
+      defaultZone: http://127.0.0.1:12345/eureka/
+    enabled: true
+  instance:
+    instance-id: ${spring.application.name}:${random.int}
