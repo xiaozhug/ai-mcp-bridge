@@ -192,7 +192,7 @@ mvn clean compile
 - 检查 `mcp.targetPackages` 参数是否指向正确的包路径
 - 确认 Controller 类和方法使用了正确的 Spring Web 注解
 - 查看编译日志是否有相关错误信息
-- **特别检查**：如果项目中 `maven-compiler-plugin` 已配置 `<annotationProcessorPaths>`，确保 `spring-mcp-bridge-apt` 依赖已正确添加到该部分，此时完全不需要在 `<dependencies>` 中配置该依赖
+- **特别检查**：如果项目中 `maven-compiler-plugin` 已配置 `<annotationProcessorPaths>`，确保 `ai-mcp-bridge-apt` 依赖已正确添加到该部分，此时完全不需要在 `<dependencies>` 中配置该依赖
 
 ### 2. 部分方法未生成元数据
 

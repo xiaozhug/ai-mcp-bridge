@@ -24,10 +24,10 @@ This is a complete example project demonstrating how to automatically register R
 - **Simplified Deployment**: Reduces operational complexity for rapid deployment
 
 ### Core Components
-- **spring-mcp-bridge-registry-starter**: MCP service registration starter (core dependency)
-- **spring-mcp-bridge-metadata-file-expose-starter**: Metadata exposure support (core dependency)
+- **ai-mcp-bridge-spring-boot-mcp-registry-starter**: MCP service registration starter (core dependency)
+- **ai-mcp-bridge-spring-boot-mcp-file-expose-starter**: Metadata exposure support (core dependency)
 - **metadata-compile**: Metadata generation module (shared by demo projects)
-- **spring-mcp-bridge-client-starter**: MCP client support (client core dependency)
+- **ai-mcp-bridge-spring-boot-mcp-client-starter**: MCP client support (client core dependency)
 - **Registry Client**: Nacos/Eureka/Consul/Zookeeper (choose one)
 
 ## Environment Requirements
@@ -62,14 +62,14 @@ This is a complete example project demonstrating how to automatically register R
         <artifactId>metadata-compile-jdk8</artifactId>
     </dependency>
 
-    <!-- 🔌 spring-mcp-bridge-registry-starter (Core Dependency) -->
+    <!-- 🔌 ai-mcp-bridge-spring-boot-mcp-registry-starter (Core Dependency) -->
     <!-- This is the core registry dependency provided by AI MCP Bridge project, must be included -->
     <dependency>
         <groupId>io.github.xiaozhug</groupId>
         <artifactId>ai-mcp-bridge-spring-boot-mcp-registry-starter</artifactId>
     </dependency>
 
-    <!-- 🔧 spring-mcp-bridge-metadata-file-expose-starter (Core Dependency) -->
+    <!-- 🔧 ai-mcp-bridge-spring-boot-mcp-file-expose-starter (Core Dependency) -->
     <!-- Used for automatic exposure of MCP metadata, key to implementing service registration -->
     <dependency>
         <groupId>io.github.xiaozhug</groupId>
@@ -148,7 +148,7 @@ spring:
       base-url: your-base-url
 
   cloud:
-    # spring-mcp-bridge-client-starter discovery method (core configuration)
+    # ai-mcp-bridge-spring-boot-mcp-client-starter discovery method (core configuration)
     discovery:
       fetch:
         enabled: true

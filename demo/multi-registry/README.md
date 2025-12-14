@@ -364,4 +364,4 @@ Spring 的条件注解机制在父子容器环境下存在设计限制，需要�
 
 **multi-registry** 示例工程展示了 AI MCP Bridge 的双注册中心支持功能，通过该功能，开发者可以将 MCP 工具同时注册到两个不同的服务注册中心。本示例使用 Nacos 作为第一个注册中心，Consul 作为第二个注册中心（MCP 元数据发布目标）。
 
-该示例通过配置文件中的集中配置实现双注册中心的无缝集成，支持灵活的注册中心组合选择，确保新旧系统无缝衔接，同时易于扩展支持更多注册中心类型。核心依赖包括 `spring-mcp-bridge-registry-starter`、`spring-mcp-bridge-metadata-file-expose-starter` 和 `spring-mcp-bridge-client-starter`，这些依赖共同实现了多注册中心的协调管理和 MCP 工具的发现调用功能。
+该示例通过配置文件中的集中配置实现双注册中心的无缝集成，支持灵活的注册中心组合选择，确保新旧系统无缝衔接，同时易于扩展支持更多注册中心类型。核心依赖包括 `ai-mcp-bridge-spring-boot-mcp-registry-starter`、`ai-mcp-bridge-spring-boot-mcp-file-expose-starter` 和 `ai-mcp-bridge-spring-boot-mcp-client-starter`，这些依赖共同实现了多注册中心的协调管理和 MCP 工具的发现调用功能。

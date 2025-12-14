@@ -190,7 +190,7 @@ After compilation, view the generated MCP metadata in `src/main/resources/mcp-me
 - Check if `mcp.targetPackages` parameter points to the correct package path
 - Verify if Controller classes and methods use correct Spring Web annotations
 - Check compilation logs for related error messages
-- **Special Check**: If `maven-compiler-plugin` in the project already has `<annotationProcessorPaths>` configured, ensure `spring-mcp-bridge-apt` dependency is correctly added to that section; in this case, it's completely unnecessary to configure this dependency in `<dependencies>`
+- **Special Check**: If `maven-compiler-plugin` in the project already has `<annotationProcessorPaths>` configured, ensure `ai-mcp-bridge-apt` dependency is correctly added to that section; in this case, it's completely unnecessary to configure this dependency in `<dependencies>`
 
 ### 2. Some Methods Not Generating Metadata
 

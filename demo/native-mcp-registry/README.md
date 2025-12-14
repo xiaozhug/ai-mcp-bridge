@@ -4,7 +4,7 @@
 
 ## 项目简介
 
-这是一个演示如何将**原生 MCP 工具**自动注册到**服务注册中心**的完整示例项目。项目通过 Spring AI 原生 `@Tool` 注解开发 MCP 工具，并通过 `spring-mcp-bridge-registry-starter` 实现自动服务注册，为原生 MCP 工具提供标准的服务治理能力。
+这是一个演示如何将**原生 MCP 工具**自动注册到**服务注册中心**的完整示例项目。项目通过 Spring AI 原生 `@Tool` 注解开发 MCP 工具，并通过 `ai-mcp-bridge-spring-boot-mcp-registry-starter` 实现自动服务注册，为原生 MCP 工具提供标准的服务治理能力。
 
 ## 核心特性
 
@@ -145,7 +145,7 @@ spring:
       base-url: your-openai-base-url
 
   cloud:
-    # spring-mcp-bridge-client-starter中的discovery方式（核心配置）
+    # ai-mcp-bridge-spring-boot-mcp-client-starter中的discovery方式（核心配置）
     discovery:
       fetch:
         enabled: true

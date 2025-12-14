@@ -4,7 +4,7 @@
 
 ## Project Introduction
 
-This is a complete example project demonstrating how to automatically register **native MCP tools** to a **service registry**. The project develops MCP tools using Spring AI's native `@Tool` annotation, and implements automatic service registration through `spring-mcp-bridge-registry-starter`, providing standard service governance capabilities for native MCP tools.
+This is a complete example project demonstrating how to automatically register **native MCP tools** to a **service registry**. The project develops MCP tools using Spring AI's native `@Tool` annotation, and implements automatic service registration through `ai-mcp-bridge-spring-boot-mcp-registry-starter`, providing standard service governance capabilities for native MCP tools.
 
 ## Core Features
 
@@ -145,7 +145,7 @@ spring:
       base-url: your-openai-base-url
 
   cloud:
-    # spring-mcp-bridge-client-starter discovery method (core configuration)
+    # ai-mcp-bridge-spring-boot-mcp-client-starter discovery method (core configuration)
     discovery:
       fetch:
         enabled: true

@@ -9,7 +9,7 @@
 
     <name>ai-mcp-bridge</name>
     <description>AI MCP Bridge 是一个革命性的 MCP 服务治理平台，提供一站式 Spring 应用 MCP 化解决方案。它不仅能够将 Spring Web 项目中的 REST Controller 接口无缝升级为 MCP 服务，更提供**完整的 MCP Tool 注册发现生态**，让传统应用快速具备 AI 工具调用能力。</description>
-    <url>https://github.com/xiaozhug/spring-mcp-bridge</url>
+    <url>https://github.com/xiaozhug/ai-mcp-bridge</url>
 
     <licenses>
         <license>
@@ -19,9 +19,9 @@
     </licenses>
 
     <scm>
-        <connection>scm:git:git://github.com/xiaozhug/spring-mcp-bridge.git</connection>
-        <developerConnection>scm:git:ssh://github.com/xiaozhug/spring-mcp-bridge.git</developerConnection>
-        <url>https://github.com/xiaozhug/spring-mcp-bridge</url>
+        <connection>scm:git:git://github.com/xiaozhug/ai-mcp-bridge.git</connection>
+        <developerConnection>scm:git:ssh://github.com/xiaozhug/ai-mcp-bridge.git</developerConnection>
+        <url>https://github.com/xiaozhug/ai-mcp-bridge</url>
         <tag>HEAD</tag>
     </scm>
 

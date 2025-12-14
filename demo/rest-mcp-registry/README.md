@@ -24,10 +24,10 @@
 - **简化部署**：降低运维复杂度，快速上线
 
 ### 核心组件
-- **spring-mcp-bridge-registry-starter**：MCP 服务注册启动器（核心依赖）
-- **spring-mcp-bridge-metadata-file-expose-starter**：元数据暴露支持（核心依赖）
+- **ai-mcp-bridge-spring-boot-mcp-registry-starter**：MCP 服务注册启动器（核心依赖）
+- **ai-mcp-bridge-spring-boot-mcp--file-expose-starter**：元数据暴露支持（核心依赖）
 - **metadata-compile**：元数据生成模块（演示项目共用）
-- **spring-mcp-bridge-client-starter**：MCP 客户端支持（客户端核心依赖）
+- **ai-mcp-bridge-spring-boot-mcp--client-starter**：MCP 客户端支持（客户端核心依赖）
 - **注册中心客户端**：Nacos/Eureka/Consul/Zookeeper（任选其一）
 
 ## 环境要求
@@ -62,14 +62,14 @@
         <artifactId>metadata-compile-jdk8</artifactId>
     </dependency>
     
-    <!-- 🔌 spring-mcp-bridge-registry-starter（核心依赖） -->
+    <!-- 🔌 ai-mcp-bridge-spring-boot-mcp-registry-starter（核心依赖） -->
     <!-- 这是 AI MCP Bridge 项目提供的核心注册中心依赖，必须包含 -->
     <dependency>
         <groupId>io.github.xiaozhug</groupId>
         <artifactId>ai-mcp-bridge-spring-boot-mcp-registry-starter</artifactId>
     </dependency>
 
-    <!-- 🔧 spring-mcp-bridge-metadata-file-expose-starter（核心依赖） -->
+    <!-- 🔧 ai-mcp-bridge-spring-boot-mcp-file-expose-starter（核心依赖） -->
     <!-- 用于自动暴露 MCP 元数据，是实现服务注册的关键 -->
     <dependency>
         <groupId>io.github.xiaozhug</groupId>
@@ -148,7 +148,7 @@ spring:
       base-url: your-base-url
 
   cloud:
-    # spring-mcp-bridge-client-starter中的discovery方式（核心配置）
+    # ai-mcp-bridge-spring-boot-mcp-client-starter中的discovery方式（核心配置）
     discovery:
       fetch:
         enabled: true

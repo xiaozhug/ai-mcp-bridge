@@ -27,7 +27,7 @@ spring:
       enabled: false
       connect-string: 127.0.0.1:2181
 
-#    spring-mcp-bridge-client-starter中的discovery方式
+#    ai-mcp-bridge-spring-boot-mcp-client-starter中的discovery方式
     discovery:
       fetch:
         enabled: true
