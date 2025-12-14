@@ -12,6 +12,21 @@
     <artifactId>ai-mcp-bridge-common</artifactId>
     <name>ai-mcp-bridge :: ai-mcp-bridge-common</name>
     <description>ai-mcp-bridge-common</description>
+    <url>https://github.com/xiaozhug/ai-mcp-bridge</url>
+
+    <scm>
+        <connection>scm:git:git://github.com/xiaozhug/ai-mcp-bridge.git</connection>
+        <developerConnection>scm:git:ssh://github.com/xiaozhug/ai-mcp-bridge.git</developerConnection>
+        <url>https://github.com/xiaozhug/ai-mcp-bridge</url>
+    </scm>
+
+    <developers>
+        <developer>
+            <name>xiaozhug</name>
+            <email>532182070@qq.com</email>
+            <url>https://github.com/xiaozhug</url>
+        </developer>
+    </developers>
 
     <dependencies>
         <dependency>

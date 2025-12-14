@@ -22,7 +22,6 @@
         <connection>scm:git:git://github.com/xiaozhug/ai-mcp-bridge.git</connection>
         <developerConnection>scm:git:ssh://github.com/xiaozhug/ai-mcp-bridge.git</developerConnection>
         <url>https://github.com/xiaozhug/ai-mcp-bridge</url>
-        <tag>HEAD</tag>
     </scm>
 
     <developers>

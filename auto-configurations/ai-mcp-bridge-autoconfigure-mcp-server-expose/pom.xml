@@ -12,6 +12,21 @@
     <artifactId>ai-mcp-bridge-autoconfigure-mcp-server-expose</artifactId>
     <name>auto-configurations :: ai-mcp-bridge-autoconfigure-mcp-server-expose</name>
     <description>ai-mcp-bridge-autoconfigure-mcp-server-expose</description>
+    <url>https://github.com/xiaozhug/ai-mcp-bridge</url>
+
+    <scm>
+        <connection>scm:git:git://github.com/xiaozhug/ai-mcp-bridge.git</connection>
+        <developerConnection>scm:git:ssh://github.com/xiaozhug/ai-mcp-bridge.git</developerConnection>
+        <url>https://github.com/xiaozhug/ai-mcp-bridge</url>
+    </scm>
+
+    <developers>
+        <developer>
+            <name>xiaozhug</name>
+            <email>532182070@qq.com</email>
+            <url>https://github.com/xiaozhug</url>
+        </developer>
+    </developers>
 
     <properties>
         <spring-boot.version>3.5.0</spring-boot.version>
