@@ -53,7 +53,7 @@ public class McpMetadataExposeAutoConfiguration {
                 if (!CollectionUtils.isEmpty(params)) {
                     parameterTypes = params.stream().map(param -> {
                         try {
-                            return Class.forName(param.getParamType());
+                            return getClassForName(param.getParamType());
                         } catch (ClassNotFoundException e) {
                             throw new RuntimeException(e);
                         }
@@ -86,6 +86,31 @@ public class McpMetadataExposeAutoConfiguration {
             }
         }
         return mcpToolSpecification;
+    }
+
+    private Class<?> getClassForName(String className) throws ClassNotFoundException {
+        switch (className) {
+            case "int":
+                return int.class;
+            case "long":
+                return long.class;
+            case "double":
+                return double.class;
+            case "float":
+                return float.class;
+            case "boolean":
+                return boolean.class;
+            case "char":
+                return char.class;
+            case "byte":
+                return byte.class;
+            case "short":
+                return short.class;
+            case "void":
+                return void.class;
+            default:
+                return Class.forName(className);
+        }
     }
 
     @Bean

@@ -46,12 +46,6 @@ public class RestMcpRegistryClientApplication {
                     break;
                 }
 
-                // 帮助命令
-                if (input.equalsIgnoreCase("help")) {
-                    printHelp();
-                    continue;
-                }
-
                 // 处理用户输入
                 processCommand(input, chatClient);
             }
@@ -77,17 +71,6 @@ public class RestMcpRegistryClientApplication {
         } catch (Exception e) {
             e.printStackTrace();
         }
-    }
-
-    private static void printHelp() {
-        System.out.println("\n=== 命令帮助 ===");
-        System.out.println("添加用户 [用户名] - 添加新用户并生成随机密码");
-        System.out.println("生成密码 - 生成一个强密码");
-        System.out.println("查询用户 [条件] - 生成查询用户的SQL语句");
-        System.out.println("exit/quit - 退出程序");
-        System.out.println("help - 显示帮助信息");
-        System.out.println("其他任意输入将直接发送给AI");
-        System.out.println("================");
     }
 
     @Bean

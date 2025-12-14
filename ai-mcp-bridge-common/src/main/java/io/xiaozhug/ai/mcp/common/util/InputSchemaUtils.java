@@ -59,13 +59,17 @@ public class InputSchemaUtils {
 
         // 遍历 properties 中的每个字段
         Iterator<Map.Entry<String, JsonNode>> fieldIterator = propertiesNode.fields();
-        int index = 0; // 用于匹配元数据列表中的元素
-        while (fieldIterator.hasNext() && index < fieldList.size()) {
+        while (fieldIterator.hasNext()) {
             Map.Entry<String, JsonNode> entry = fieldIterator.next();
             String fieldName = entry.getKey();
             JsonNode fieldSchemaNode = entry.getValue();
 
             McpMetadataItem.Param.Field field = getField(fieldList, fieldName);
+
+            if(field == null){
+                log.warn("No metadata found for field: {}", fieldName);
+                continue;
+            }
 
             // 找到对应的元数据后，设置 description
             if (fieldSchemaNode instanceof ObjectNode) {

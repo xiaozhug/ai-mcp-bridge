@@ -19,7 +19,7 @@ public class ToolUtils {
     public static String getToolName(String serviceName, McpTool tool, RequestTemplateInfo requestTemplateInfo){
         String toolName = tool.getName();
         if(requestTemplateInfo != null){
-            return serviceName + "_" + toolName + "_" + requestTemplateInfo.getUrl().replaceAll("/","_");
+            return serviceName + "_" + toolName + "_" + requestTemplateInfo.getMethod() + "_" + requestTemplateInfo.getUrl().replaceAll("/","_");
         }
 
         return toolName;
