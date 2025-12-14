@@ -21,7 +21,11 @@ public class DefaultFieldExplorerExtension implements FieldExplorerExtension {
 
     private static final Set<String> PRIMITIVE_TYPE_NAMES = new HashSet<>(Arrays.asList(
             ObjectNode.class.getTypeName(),
-            ArrayNode.class.getTypeName()
+            ArrayNode.class.getTypeName(),
+            "javax.servlet.http.HttpServletRequest",
+            "javax.servlet.http.HttpServletResponse",
+            "jakarta.servlet.http.HttpServletRequest",
+            "jakarta.servlet.http.HttpServletResponse"
     ));
 
     @Override

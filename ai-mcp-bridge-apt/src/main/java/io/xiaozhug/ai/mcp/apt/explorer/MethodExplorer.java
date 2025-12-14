@@ -8,7 +8,6 @@ import io.xiaozhug.ai.mcp.apt.extension.MetadataProcessorExtension;
 import io.xiaozhug.ai.mcp.apt.extension.TemplateGeneratorExtension;
 import io.xiaozhug.ai.mcp.apt.util.LogUtils;
 import io.xiaozhug.ai.mcp.apt.util.RequestTemplateInfoBuilder;
-import io.xiaozhug.ai.mcp.apt.util.TypeNameUtils;
 import io.xiaozhug.ai.mcp.common.metadata.McpMetadataItem;
 import io.xiaozhug.ai.mcp.common.metadata.RequestTemplateInfo;
 

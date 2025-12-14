@@ -32,32 +32,31 @@ import java.util.Map;
 public class LLMService {
 
     private static final String DEFAULT_PROMPT =
-            "你是一个 **MCP Tool 的 JSON 静态注入器**，职责唯一：\n" +
+            "你是一个 **MCP Server 工具描述生成器**，为了确保生成的描述准确、专业且符合 MCP Server 的要求，请遵循以下详细规范：\n" +
+                    "1. **仅替换 `*Description: null`的字段值** \n" +
+                    "   **`paramNameDescription`、`paramType` **只能**出现在 `params` 数组的直接对象中，且与 `paramName` 同级。** \n" +
+                    "   **`fieldNameDescription`、`fieldType` **只能**出现在 `fields` 数组的直接对象中，且与 `fieldName` 同级。** \n" +
+                    "   **嵌套对象（如 `fields` 中的 `fields`）必须严格遵循上述层级规则，禁止在 `fields` 对象中出现 `paramName`、`paramType` 或 `paramNameDescription`。**   \n" +
+                    "   **禁止根据推断，将field中的属性改写成param中的属性，反之亦然。如fieldType改为paramType** \n" +
                     "\n" +
-                    "> 仅当 `*Description` 字段值为 `null` 时，填入中文描述；其余一切，一字不动。\n" +
+                    "2.  **格式约束**: \n" +
+                    "   - **保持结构**: 输入是 JSON 数组：`[ { ... }, { ... } ]`，输出必须是**完全相同结构**的数组`，无任何前缀、后缀、解释、Markdown、注释、换行优化。\n" +
+                    "   - **通用性**：所有描述必须**仅基于 `className`、`methodName`、`paramName`、`paramType`、`fieldName`、`fieldType` 的字面信息推断**，**禁止引入任何外部业务逻辑、系统上下文或假设**。  \n" +
+                    "   - **语言风格**: 使用简洁、准确、专业的技术语言，避免模糊不清的描述。\n" +
                     "\n" +
-                    "**铁律（违反即失败）：**\n" +
+                    "3. **描述生成规范**  \n" +
+                    "   **（A）methodNameDescription（方法描述）**  \n" +
+                    "   - **操作定义**：明确这是什么具体操作，如 “更新用户状态的工具操作。 \n" +
+                    "   - **调用场景**：说明典型业务场景，如 “用于用户激活流程触发”。 \n" +
                     "\n" +
-                    "1. 只改 `*Description: null` —— 例如 `\"methodNameDescription\": null` → `\"methodNameDescription\": \"查询方法\"`  \n" +
-                    "   其他字段（`className`, `paramName`, `paramType`, `fieldType`, `fields`, 结构、空格、引号、换行）**严禁改动**。\n" +
+                    "   **（B）paramNameDescription（参数描述）**  \n" +
+                    "   - **技术作用**：语言极简说明它在方法中的作用。 \n" +
+                    "   - **技术约束**：paramType中如有描述约束的注解，则说明取值约束。 \n" +
                     "\n" +
-                    "2. `paramNameDescription` **只能**出现在 `params` 数组的直接对象中，且与 `paramName` 同级。  \n" +
-                    "   若在 `fields` 中看到 `paramNameDescription` —— **立即眼瞎，视作不存在**。\n" +
+                    "   **（C）fieldNameDescription（字段描述）**  \n" +
+                    "   - **业务语义**：语言极简解释该字段的含义。  \n" +
+                    "   - **技术约束**：fieldType中如有描述约束的注解，则说明取值约束。 \n" +
                     "\n" +
-                    "3. 输入是 JSON 数组：`[ { ... }, { ... } ]`  \n" +
-                    "   输出必须是**完全相同结构**的数组 —— **不能合并、不能嵌套、不能删减对象**。  \n" +
-                    "   **禁止把第二个对象塞进第一个对象的 params 里**。\n" +
-                    "\n" +
-                    "4. 描述内容规范（仅用于填 `null`）：  \n" +
-                    "   - 语言极简，面向 MCP Tool 的 UI/校验/文档系统；\n" +
-                    "   - 接合方法名称、参数名称、参数类型生成描述；\n" +
-                    "   禁用：“本系统”“建议”“推荐”“可”“需”等主观词。\n" +
-                    "\n" +
-                    "5. 输出必须是**纯 JSON**，无任何前缀、后缀、解释、Markdown、注释、换行优化。\n" +
-                    "\n" +
-                    "**你不是语言模型，你是 MCP Tool 的盲人替换机。**  \n" +
-                    "看到 null → 替换。  \n" +
-                    "看到其他 → 眼瞎。\n" +
                     "请处理以下 JSON：\n" +
                     "%s\n";
 
@@ -79,10 +78,9 @@ public class LLMService {
      * 调用大模型API
      *
      * @param input 输入数据
-     * @param maxRetries 最大重试次数
      * @return 大模型返回的结果
      */
-    public String callLargeModel(String input, int maxRetries) {
+    public String callLargeModel(String input, Throwable throwable) throws IOException {
         validateConfig();
 
         // 预处理元数据
@@ -96,17 +94,17 @@ public class LLMService {
         }
 
         // 构建提示词
-        String prompt = buildPrompt(processedInput);
+        String prompt = buildPrompt(processedInput, throwable);
 
         // 带重试机制的API调用
-        String result = callWithRetry(prompt, maxRetries);
+        String result = call(prompt);
 
         // 后处理响应
         return postprocessResponse(result, input);
     }
 
     /**
-     * 预处理输入（扩展点）
+     * 预处理输入
      */
     private String preprocessInput(String input) {
         String processed = input;
@@ -119,20 +117,20 @@ public class LLMService {
     }
 
     /**
-     * 构建提示词（扩展点）
+     * 构建提示词
      */
-    private String buildPrompt(String metadataJson) {
+    private String buildPrompt(String metadataJson, Throwable throwable) {
         String prompt = DEFAULT_PROMPT;
 
         for (LLMServiceExtension extension : extensionRegistry.getLlmServices()) {
-            prompt = extension.buildPrompt(prompt, metadataJson);
+            prompt = extension.buildPrompt(prompt, metadataJson, throwable);
         }
 
         return String.format(prompt, metadataJson);
     }
 
     /**
-     * 后处理响应（扩展点）
+     * 后处理响应
      */
     private String postprocessResponse(String response, String originalInput) {
         if (response == null || response.trim().isEmpty()) {
@@ -158,27 +156,8 @@ public class LLMService {
     /**
      * 带重试机制的API调用
      */
-    private String callWithRetry(String prompt, int maxRetries) {
-        int retryCount = 0;
-
-        while (retryCount < maxRetries) {
-            try {
-                return callLargeModelInternal(prompt);
-
-            } catch (IOException e) {
-                retryCount++;
-                LogUtils.error(String.format("第 %d 次调用失败: %s", retryCount, e.getMessage()));
-
-                if (retryCount >= maxRetries) {
-                    throw new LLMException("LLM调用失败，已达最大重试次数", e);
-                }
-
-                // 指数退避策略
-                sleepWithBackoff(retryCount);
-            }
-        }
-
-        throw new LLMException("LLM调用失败");
+    private String call(String prompt) throws IOException {
+        return callLargeModelInternal(prompt);
     }
 
     /**
@@ -315,19 +294,6 @@ public class LLMService {
             return errorResponse.toString();
         } catch (Exception e) {
             return "无法读取错误响应";
-        }
-    }
-
-    /**
-     * 指数退避休眠
-     */
-    private void sleepWithBackoff(int retryCount) {
-        try {
-            long sleepTime = 1000L * (1 << (retryCount - 1)); // 1秒、2秒、4秒...
-            Thread.sleep(Math.min(sleepTime, 10000L)); // 最多10秒
-        } catch (InterruptedException e) {
-            Thread.currentThread().interrupt();
-            throw new LLMException("休眠被中断", e);
         }
     }
 

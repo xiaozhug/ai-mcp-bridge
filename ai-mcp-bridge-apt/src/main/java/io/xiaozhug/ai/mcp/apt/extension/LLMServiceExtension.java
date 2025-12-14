@@ -11,7 +11,7 @@ public interface LLMServiceExtension extends ConfigurableExtension{
     /**
      * 构建提示词
      */
-    default String buildPrompt(String originalPrompt, String metadataJson) {
+    default String buildPrompt(String originalPrompt, String metadataJson, Throwable throwable) {
         return String.format(originalPrompt, metadataJson);
     }
     

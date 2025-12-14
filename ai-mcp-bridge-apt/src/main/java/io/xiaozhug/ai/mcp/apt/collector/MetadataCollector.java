@@ -2,6 +2,7 @@ package io.xiaozhug.ai.mcp.apt.collector;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import io.xiaozhug.ai.mcp.apt.config.ProcessorConfig;
+import io.xiaozhug.ai.mcp.apt.exception.LLMException;
 import io.xiaozhug.ai.mcp.apt.extension.ExtensionRegistry;
 import io.xiaozhug.ai.mcp.apt.extension.MetadataFilterExtension;
 import io.xiaozhug.ai.mcp.apt.exception.ProcessorException;
@@ -198,7 +199,7 @@ public class MetadataCollector {
             metadata.setItems(new ArrayList<>(metadataItems));
 
             // 调用LLM服务处理元数据
-            McpMetadata processedMetadata = processWithLLM(metadata);
+            McpMetadata processedMetadata = processWithLLM(metadata, config.getMaxRetries());
 
             // 应用最终元数据过滤器
             processedMetadata = applyFinalMetadataFilter(processedMetadata);
@@ -240,7 +241,7 @@ public class MetadataCollector {
     /**
      * 使用LLM处理元数据
      */
-    private McpMetadata processWithLLM(McpMetadata metadata) {
+    private McpMetadata processWithLLM(McpMetadata metadata, int maxRetries) {
         try {
 
             List<LLMRequestMetadataItem> llmItems = new ArrayList<>();
@@ -252,24 +253,58 @@ public class MetadataCollector {
             // 转换为JSON字符串
             String metadataString = JsonUtils.toJSONString(llmItems);
 
-            // 调用LLM服务
-            String callResult = llmService.callLargeModel(metadataString, config.getMaxRetries());
+            int retryCount = 0;
+            Throwable throwable = null;
 
-            if (callResult == null || callResult.trim().isEmpty()) {
-                LogUtils.debug("警告: LLM返回结果为空，使用原始元数据");
-                return metadata;
+            while (retryCount < maxRetries) {
+                try {
+                    // 调用LLM服务
+                    String callResult = llmService.callLargeModel(metadataString, throwable);
+
+                    if (callResult == null || callResult.trim().isEmpty()) {
+                        LogUtils.debug("警告: LLM返回结果为空，使用原始元数据");
+                        return metadata;
+                    }
+
+                    // 解析LLM返回的结果
+                    List<McpMetadataItem> processedMetadataItems =
+                            JsonUtils.fromJson(callResult, new TypeReference<List<McpMetadataItem>>() {});
+
+                    this.fillDescription(items, processedMetadataItems);
+
+                    return metadata;
+
+                } catch (Throwable t) {
+                    retryCount++;
+                    throwable = t;
+                    LogUtils.error(String.format("第 %d 次调用失败: %s", retryCount, t.getMessage()));
+
+                    if (retryCount >= maxRetries) {
+                        throw new LLMException("LLM调用失败，已达最大重试次数", t);
+                    }
+
+                    // 指数退避策略
+                    sleepWithBackoff(retryCount);
+                }
             }
-
-            // 解析LLM返回的结果
-            List<McpMetadataItem> processedMetadataItems =
-                    JsonUtils.fromJson(callResult, new TypeReference<List<McpMetadataItem>>() {});
-
-            this.fillDescription(items, processedMetadataItems);
 
             return metadata;
 
         } catch (Exception e) {
             throw new RuntimeException(e);
+        }
+    }
+
+    /**
+     * 指数退避休眠
+     */
+    private void sleepWithBackoff(int retryCount) {
+        try {
+            long sleepTime = 1000L * (1 << (retryCount - 1)); // 1秒、2秒、4秒...
+            Thread.sleep(Math.min(sleepTime, 10000L)); // 最多10秒
+        } catch (InterruptedException e) {
+            Thread.currentThread().interrupt();
+            throw new LLMException("休眠被中断", e);
         }
     }
 
