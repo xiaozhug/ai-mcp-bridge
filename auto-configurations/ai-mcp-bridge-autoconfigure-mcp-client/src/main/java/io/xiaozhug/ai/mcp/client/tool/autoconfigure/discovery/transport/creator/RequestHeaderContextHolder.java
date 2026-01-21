@@ -1,5 +1,6 @@
 package io.xiaozhug.ai.mcp.client.tool.autoconfigure.discovery.transport.creator;
 
+import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 
 /**
@@ -16,7 +17,7 @@ public class RequestHeaderContextHolder {
     }
 
     public static MultiValueMap<String, String> getHeaders() {
-        return headersHolder.get();
+        return headersHolder.get() == null ? new LinkedMultiValueMap<>() : headersHolder.get();
     }
 
     public static void resetHeaders() {
