@@ -104,7 +104,7 @@ public class McpClientDiscoveryAutoConfiguration implements EnvironmentAware {
 
         @Bean
         @Qualifier(LOAD_BALANCED_REST_MCP_CLIENT_TRANSPORT_BEAN_NAME)
-        public RestMcpClientTransport restMcpClientTransport(@Qualifier(LOAD_BALANCED_WEB_CLIENT_BUILDER_MCP_CLIENT_BEAN_NAME) WebClient.Builder webClientBuilder) {
+        public RestMcpClientTransport loadBalancedRestMcpClientTransport(@Qualifier(LOAD_BALANCED_WEB_CLIENT_BUILDER_MCP_CLIENT_BEAN_NAME) WebClient.Builder webClientBuilder) {
             return new WebClientMcpClientTransport(webClientBuilder);
         }
     }
@@ -126,7 +126,7 @@ public class McpClientDiscoveryAutoConfiguration implements EnvironmentAware {
 
         @Bean
         @Qualifier(LOAD_BALANCED_REST_MCP_CLIENT_TRANSPORT_BEAN_NAME)
-        public RestMcpClientTransport restMcpClientTransport(@Qualifier(LOAD_BALANCED_REST_TEMPLATE_MCP_CLIENT_BEAN_NAME) RestTemplate restTemplate) {
+        public RestMcpClientTransport loadBalancedRestMcpClientTransport(@Qualifier(LOAD_BALANCED_REST_TEMPLATE_MCP_CLIENT_BEAN_NAME) RestTemplate restTemplate) {
             return new RestTemplateMcpClientTransport(restTemplate);
         }
     }

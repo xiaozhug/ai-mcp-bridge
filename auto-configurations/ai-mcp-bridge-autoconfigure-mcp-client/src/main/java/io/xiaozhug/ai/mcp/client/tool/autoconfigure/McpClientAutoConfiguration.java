@@ -18,7 +18,6 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.autoconfigure.AutoConfigureAfter;
 import org.springframework.boot.autoconfigure.condition.*;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
-import org.springframework.boot.web.client.RestTemplateBuilder;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Conditional;
 import org.springframework.context.annotation.Configuration;
@@ -41,9 +40,7 @@ import static io.xiaozhug.ai.mcp.client.tool.autoconfigure.McpClientAutoConfigur
 public class McpClientAutoConfiguration {
 
     @Bean
-    @ConditionalOnProperty(prefix = McpClientCommonProperties.CONFIG_PREFIX, name = "type", havingValue = "SYNC",
-            matchIfMissing = true)
-    @ConditionalOnProperty(prefix = McpFetchProperties.CONFIG_PREFIX, name = "enabled", havingValue = "true")
+    @Conditional(SyncHttpToolCondition.class)
     public SyncHttpToolCallbackProvider syncHttpToolCallbackProvider(ObjectProvider<List<McpSyncClient>> mcpClientsProvider,
                                                                      McpSseClientProperties sseProperties,
                                                                      @Qualifier(REST_MCP_CLIENT_TRANSPORT_BEAN_NAME)
@@ -53,8 +50,7 @@ public class McpClientAutoConfiguration {
     }
 
     @Bean
-    @ConditionalOnProperty(prefix = McpFetchProperties.CONFIG_PREFIX, name = "enabled", havingValue = "true")
-    @ConditionalOnProperty(prefix = McpClientCommonProperties.CONFIG_PREFIX, name = "type", havingValue = "ASYNC")
+    @Conditional(AsyncHttpToolCondition.class)
     public AsyncMcpFetchToolCallbackProvider asyncHttpToolCallbackProvider(ObjectProvider<List<McpAsyncClient>> mcpClientsProvider,
                                                                            McpSseClientProperties sseProperties,
                                                                            @Qualifier(REST_MCP_CLIENT_TRANSPORT_BEAN_NAME)
@@ -72,7 +68,7 @@ public class McpClientAutoConfiguration {
     }
 
     @Configuration(proxyBeanMethods = false)
-    @Conditional(ToolCallbackProvider.class)
+    @Conditional(RestToolCallbackProviderCondition.class)
     public static class RestMcpClientTransportConfiguration {
 
         public final static String REST_MCP_CLIENT_TRANSPORT_BEAN_NAME = "mcpClientAutoConfigurationRestMcpClientTransport";
@@ -92,7 +88,7 @@ public class McpClientAutoConfiguration {
 
             @Bean
             @Qualifier(REST_MCP_CLIENT_TRANSPORT_BEAN_NAME)
-            public RestMcpClientTransport restMcpClientTransport(@Qualifier(WEB_CLIENT_BUILDER_MCP_CLIENT_BEAN_NAME) WebClient.Builder webClientBuilder) {
+            public RestMcpClientTransport mcpClientAutoConfigurationRestMcpClientTransport(@Qualifier(WEB_CLIENT_BUILDER_MCP_CLIENT_BEAN_NAME) WebClient.Builder webClientBuilder) {
                 return new WebClientMcpClientTransport(webClientBuilder);
             }
         }
@@ -113,15 +109,15 @@ public class McpClientAutoConfiguration {
 
             @Bean
             @Qualifier(REST_MCP_CLIENT_TRANSPORT_BEAN_NAME)
-            public RestMcpClientTransport restMcpClientTransport(@Qualifier(REST_TEMPLATE_MCP_CLIENT_BEAN_NAME) RestTemplate restTemplate) {
+            public RestMcpClientTransport mcpClientAutoConfigurationRestMcpClientTransport(@Qualifier(REST_TEMPLATE_MCP_CLIENT_BEAN_NAME) RestTemplate restTemplate) {
                 return new RestTemplateMcpClientTransport(restTemplate);
             }
         }
     }
 
-    private static class ToolCallbackProvider extends AnyNestedCondition {
+    static class RestToolCallbackProviderCondition extends AnyNestedCondition {
 
-        ToolCallbackProvider() {
+        RestToolCallbackProviderCondition() {
             super(ConfigurationPhase.PARSE_CONFIGURATION);
         }
 
@@ -135,6 +131,41 @@ public class McpClientAutoConfiguration {
 
         }
 
+    }
+
+    static class SyncHttpToolCondition extends AllNestedConditions {
+
+        public SyncHttpToolCondition() {
+            super(ConfigurationPhase.REGISTER_BEAN);
+        }
+
+        @ConditionalOnProperty(prefix = McpClientCommonProperties.CONFIG_PREFIX, name = "type", havingValue = "SYNC",
+                matchIfMissing = true)
+        static class OnSyncMcpClient {
+
+        }
+
+        @ConditionalOnProperty(prefix = McpFetchProperties.CONFIG_PREFIX, name = "enabled", havingValue = "true")
+        static class OnMcpFetchEnabled {
+
+        }
+    }
+
+    static class AsyncHttpToolCondition extends AllNestedConditions {
+
+        public AsyncHttpToolCondition() {
+            super(ConfigurationPhase.REGISTER_BEAN);
+        }
+
+        @ConditionalOnProperty(prefix = McpClientCommonProperties.CONFIG_PREFIX, name = "type", havingValue = "ASYNC")
+        static class OnAsyncMcpClient {
+
+        }
+
+        @ConditionalOnProperty(prefix = McpFetchProperties.CONFIG_PREFIX, name = "enabled", havingValue = "true")
+        static class OnMcpFetchEnabled {
+
+        }
     }
 
 }
